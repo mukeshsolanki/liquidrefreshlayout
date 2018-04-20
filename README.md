@@ -10,8 +10,9 @@
   Liquid Refresh Layout is a simple SwipeToRefresh library that helps you easily integrate SwipeToRefresh and performs simple clean liquid animation.
 </p>
 
-![Demo](https://github.com/mukeshsolanki/liquidrefreshlayout/blob/master/demo.gif)
-
+<p align="center">
+  <img src="https://github.com/mukeshsolanki/liquidrefreshlayout/blob/master/demo.gif" width="300px" />
+</p>
 ## Getting started
 
 Its really simple to integrate *Liquid Refresh Layout* in android. All you need to do make the following change to you build gradle.
