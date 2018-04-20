@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="LiquidRefreshLayout">
+    <attr format="color" name="AniBackColor"/>
+    <attr format="color" name="AniForeColor"/>
+    <attr format="integer" name="CircleSmaller"/>
+  </declare-styleable>
+</resources>
