@@ -8,21 +8,19 @@ import android.support.v7.widget.LinearLayoutManager
 import com.madapps.liquid.LiquidRefreshLayout
 import kotlinx.android.synthetic.main.activity_main.recyclerView
 import kotlinx.android.synthetic.main.activity_main.refreshLayout
-import java.util.Timer
-import kotlin.concurrent.schedule
 
 class MainActivity : AppCompatActivity() {
   private val movieList = ArrayList<Movie>()
-  private var mAdapter: MoviesAdapter? = null
+  private var adapter: MoviesAdapter? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
-    mAdapter = MoviesAdapter(movieList)
+    adapter = MoviesAdapter(movieList)
     val mLayoutManager = LinearLayoutManager(applicationContext)
     recyclerView?.layoutManager = mLayoutManager
     recyclerView?.itemAnimator = DefaultItemAnimator()
-    recyclerView?.adapter = mAdapter
+    recyclerView?.adapter = adapter
     prepareMovieData()
     refreshLayout.setOnRefreshListener(object : LiquidRefreshLayout.OnRefreshListener {
       override fun completeRefresh() {
@@ -70,6 +68,6 @@ class MainActivity : AppCompatActivity() {
     movieList.add(movie)
     movie = Movie("Guardians of the Galaxy", "Science Fiction & Fantasy", "2014")
     movieList.add(movie)
-    mAdapter?.notifyDataSetChanged()
+    adapter?.notifyDataSetChanged()
   }
 }
