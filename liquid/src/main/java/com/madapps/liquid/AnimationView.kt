@@ -12,7 +12,8 @@ import android.util.TypedValue
 import android.view.View
 
 class AnimationView @JvmOverloads constructor(
-  context: Context, attrs: AttributeSet? = null,
+  context: Context,
+  attrs: AttributeSet? = null,
   defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
@@ -39,11 +40,9 @@ class AnimationView @JvmOverloads constructor(
 
   private var lastHeight: Int = 0
 
-  private val relHeight: Int
-    get() = (spriDeta * (1 - relRatio)).toInt()
+  private val relHeight: Int get() = (spriDeta * (1 - relRatio)).toInt()
 
-  private val springDelta: Int
-    get() = (pullDelta * sprRatio).toInt()
+  private val springDelta: Int get() = (pullDelta * sprRatio).toInt()
 
   private var start1: Long = 0
   private var stop: Long = 0
@@ -146,13 +145,15 @@ class AnimationView @JvmOverloads constructor(
   private fun initView(context: Context) {
 
     pullHeight = TypedValue.applyDimension(
-      TypedValue.COMPLEX_UNIT_DIP, 100f,
-      context.resources.displayMetrics
-    ).toInt()
+        TypedValue.COMPLEX_UNIT_DIP, 100f,
+        context.resources.displayMetrics
+    )
+        .toInt()
     pullDelta = TypedValue.applyDimension(
-      TypedValue.COMPLEX_UNIT_DIP, 50f,
-      context.resources.displayMetrics
-    ).toInt()
+        TypedValue.COMPLEX_UNIT_DIP, 50f,
+        context.resources.displayMetrics
+    )
+        .toInt()
     widthOffset = 0.5f
     backPaint = Paint()
     backPaint!!.isAntiAlias = true
@@ -175,19 +176,28 @@ class AnimationView @JvmOverloads constructor(
 
   }
 
-  override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-    var heightMeasureSpec = heightMeasureSpec
-    val height = View.MeasureSpec.getSize(heightMeasureSpec)
+  override fun onMeasure(
+    widthMeasureSpec: Int,
+    heightMeasureSpec: Int
+  ) {
+    var tempHeightMeasureSpec = heightMeasureSpec
+    val height = View.MeasureSpec.getSize(tempHeightMeasureSpec)
     if (height > pullDelta + pullHeight) {
-      heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(
-        pullDelta + pullHeight,
-        View.MeasureSpec.getMode(heightMeasureSpec)
+      tempHeightMeasureSpec = View.MeasureSpec.makeMeasureSpec(
+          pullDelta + pullHeight,
+          View.MeasureSpec.getMode(tempHeightMeasureSpec)
       )
     }
-    super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+    super.onMeasure(widthMeasureSpec, tempHeightMeasureSpec)
   }
 
-  override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+  override fun onLayout(
+    changed: Boolean,
+    left: Int,
+    top: Int,
+    right: Int,
+    bottom: Int
+  ) {
     super.onLayout(changed, left, top, right, bottom)
     if (changed) {
       radius = height / 6
@@ -208,11 +218,11 @@ class AnimationView @JvmOverloads constructor(
     super.onDraw(canvas)
     when (aniStatus) {
       AnimationView.AnimatorStatus.PULL_DOWN -> canvas.drawRect(
-        0f, 0f, localWidth.toFloat(),
-        localHeight.toFloat(), backPaint!!
+          0f, 0f, localWidth.toFloat(),
+          localHeight.toFloat(), backPaint!!
       )
       AnimationView.AnimatorStatus.REL_DRAG, AnimationView.AnimatorStatus.DRAG_DOWN -> drawDrag(
-        canvas
+          canvas
       )
       AnimationView.AnimatorStatus.SPRING_UP -> {
         drawSpring(canvas, springDelta)
@@ -255,19 +265,22 @@ class AnimationView @JvmOverloads constructor(
     path!!.reset()
     path!!.moveTo(0f, pullHeight.toFloat())
     path!!.quadTo(
-      widthOffset * localWidth, (pullHeight + (localHeight - pullHeight) * 2).toFloat(),
-      localWidth.toFloat(), pullHeight.toFloat()
+        widthOffset * localWidth, (pullHeight + (localHeight - pullHeight) * 2).toFloat(),
+        localWidth.toFloat(), pullHeight.toFloat()
     )
     canvas.drawPath(path!!, backPaint!!)
   }
 
-  private fun drawSpring(canvas: Canvas, springDelta: Int) {
+  private fun drawSpring(
+    canvas: Canvas,
+    springDelta: Int
+  ) {
     path!!.reset()
     path!!.moveTo(0f, 0f)
     path!!.lineTo(0f, pullHeight.toFloat())
     path!!.quadTo(
-      (localWidth / 2).toFloat(), (pullHeight - springDelta).toFloat(),
-      localWidth.toFloat(), pullHeight.toFloat()
+        (localWidth / 2).toFloat(), (pullHeight - springDelta).toFloat(),
+        localWidth.toFloat(), pullHeight.toFloat()
     )
     path!!.lineTo(localWidth.toFloat(), 0f)
     canvas.drawPath(path!!, backPaint!!)
@@ -277,17 +290,17 @@ class AnimationView @JvmOverloads constructor(
       path!!.reset()
       path!!.moveTo(leftX.toFloat(), curH.toFloat())
       path!!.quadTo(
-        (localWidth / 2).toFloat(), curH - radius.toFloat() * sprRatio * 2f,
-        (localWidth - leftX).toFloat(), curH.toFloat()
+          (localWidth / 2).toFloat(), curH - radius.toFloat() * sprRatio * 2f,
+          (localWidth - leftX).toFloat(), curH.toFloat()
       )
       canvas.drawPath(path!!, ballPaint!!)
     } else {
       canvas.drawArc(
-        RectF(
-          (localWidth / 2 - radius).toFloat(), (curH - radius).toFloat(),
-          (localWidth / 2 + radius).toFloat(), (curH + radius).toFloat()
-        ),
-        180f, 180f, true, ballPaint!!
+          RectF(
+              (localWidth / 2 - radius).toFloat(), (curH - radius).toFloat(),
+              (localWidth / 2 + radius).toFloat(), (curH + radius).toFloat()
+          ),
+          180f, 180f, true, ballPaint!!
       )
     }
 
@@ -298,8 +311,8 @@ class AnimationView @JvmOverloads constructor(
     path!!.moveTo(0f, 0f)
     path!!.lineTo(0f, pullHeight.toFloat())
     path!!.quadTo(
-      (localWidth / 2).toFloat(), (pullHeight - pullDelta).toFloat(),
-      localWidth.toFloat(), pullHeight.toFloat()
+        (localWidth / 2).toFloat(), (pullHeight - pullDelta).toFloat(),
+        localWidth.toFloat(), pullHeight.toFloat()
     )
     path!!.lineTo(localWidth.toFloat(), 0f)
     canvas.drawPath(path!!, backPaint!!)
@@ -308,27 +321,32 @@ class AnimationView @JvmOverloads constructor(
     val cirCenY = (cirCentStart - radius.toFloat() * 2f * popRatio).toInt()
 
     canvas.drawArc(
-      RectF(
-        (localWidth / 2 - radius).toFloat(), (cirCenY - radius).toFloat(),
-        (localWidth / 2 + radius).toFloat(), (cirCenY + radius).toFloat()
-      ),
-      180f, 360f, true, ballPaint!!
+        RectF(
+            (localWidth / 2 - radius).toFloat(), (cirCenY - radius).toFloat(),
+            (localWidth / 2 + radius).toFloat(), (cirCenY + radius).toFloat()
+        ),
+        180f, 360f, true, ballPaint!!
     )
 
     if (popRatio < 1) {
       drawTail(canvas, cirCenY, cirCentStart + 1, popRatio)
     } else {
       canvas.drawCircle(
-        (localWidth / 2).toFloat(),
-        cirCenY.toFloat(),
-        radius.toFloat(),
-        ballPaint!!
+          (localWidth / 2).toFloat(),
+          cirCenY.toFloat(),
+          radius.toFloat(),
+          ballPaint!!
       )
     }
 
   }
 
-  private fun drawTail(canvas: Canvas, centerY: Int, bottom: Int, fraction: Float) {
+  private fun drawTail(
+    canvas: Canvas,
+    centerY: Int,
+    bottom: Int,
+    fraction: Float
+  ) {
     val bezier1w = (localWidth / 2 + radius * 3 / 4 * (1 - fraction)).toInt()
     val start = PointF((localWidth / 2 + radius).toFloat(), centerY.toFloat())
     val bezier1 = PointF(bezier1w.toFloat(), bottom.toFloat())
@@ -337,13 +355,13 @@ class AnimationView @JvmOverloads constructor(
     path!!.reset()
     path!!.moveTo(start.x, start.y)
     path!!.quadTo(
-      bezier1.x, bezier1.y,
-      bezier2.x, bezier2.y
+        bezier1.x, bezier1.y,
+        bezier2.x, bezier2.y
     )
     path!!.lineTo(localWidth - bezier2.x, bezier2.y)
     path!!.quadTo(
-      localWidth - bezier1.x, bezier1.y,
-      localWidth - start.x, start.y
+        localWidth - bezier1.x, bezier1.y,
+        localWidth - start.x, start.y
     )
     canvas.drawPath(path!!, ballPaint!!)
   }
@@ -353,8 +371,8 @@ class AnimationView @JvmOverloads constructor(
     path!!.moveTo(0f, 0f)
     path!!.lineTo(0f, pullHeight.toFloat())
     path!!.quadTo(
-      (localWidth / 2).toFloat(), pullHeight - (1 - outRatio) * pullDelta,
-      localWidth.toFloat(), pullHeight.toFloat()
+        (localWidth / 2).toFloat(), pullHeight - (1 - outRatio) * pullDelta,
+        localWidth.toFloat(), pullHeight.toFloat()
     )
     path!!.lineTo(localWidth.toFloat(), 0f)
     canvas.drawPath(path!!, backPaint!!)
@@ -374,11 +392,11 @@ class AnimationView @JvmOverloads constructor(
     var swipe = refreshStop - refreshStart
     swipe = if (swipe < 0) swipe + 360 else swipe
     canvas.drawArc(
-      RectF(
-        (localWidth / 2 - outerR).toFloat(), (innerY - outerR).toFloat(),
-        (localWidth / 2 + outerR).toFloat(), (innerY + outerR).toFloat()
-      ),
-      refreshStart.toFloat(), swipe.toFloat(), false, outPaint!!
+        RectF(
+            (localWidth / 2 - outerR).toFloat(), (innerY - outerR).toFloat(),
+            (localWidth / 2 + outerR).toFloat(), (innerY + outerR).toFloat()
+        ),
+        refreshStart.toFloat(), swipe.toFloat(), false, outPaint!!
     )
     if (swipe >= targetDegree) {
       isStart = false
@@ -403,16 +421,16 @@ class AnimationView @JvmOverloads constructor(
       canvas.drawCircle((localWidth / 2).toFloat(), innerY.toFloat(), radius.toFloat(), ballPaint!!)
       val outerR = (radius.toFloat() + 10f + 10 * doneRatio / 0.3f).toInt()
       val afterColor = Color.argb(
-        (0xff * (1 - doneRatio / 0.3f)).toInt(), Color.red(beforeColor),
-        Color.green(beforeColor), Color.blue(beforeColor)
+          (0xff * (1 - doneRatio / 0.3f)).toInt(), Color.red(beforeColor),
+          Color.green(beforeColor), Color.blue(beforeColor)
       )
       outPaint!!.color = afterColor
       canvas.drawArc(
-        RectF(
-          (localWidth / 2 - outerR).toFloat(), (innerY - outerR).toFloat(),
-          (localWidth / 2 + outerR).toFloat(), (innerY + outerR).toFloat()
-        ),
-        0f, 360f, false, outPaint!!
+          RectF(
+              (localWidth / 2 - outerR).toFloat(), (innerY - outerR).toFloat(),
+              (localWidth / 2 + outerR).toFloat(), (innerY + outerR).toFloat()
+          ),
+          0f, 360f, false, outPaint!!
       )
     }
     outPaint!!.color = beforeColor
@@ -422,10 +440,10 @@ class AnimationView @JvmOverloads constructor(
       val startCentY = pullHeight - pullDelta / 2 - radius * 2
       val curCentY = (startCentY + (pullDelta / 2 + radius * 2) * fraction).toInt()
       canvas.drawCircle(
-        (localWidth / 2).toFloat(),
-        curCentY.toFloat(),
-        radius.toFloat(),
-        ballPaint!!
+          (localWidth / 2).toFloat(),
+          curCentY.toFloat(),
+          radius.toFloat(),
+          ballPaint!!
       )
       if (curCentY >= pullHeight - radius * 2) {
         drawTail(canvas, curCentY, pullHeight, 1 - fraction)
@@ -439,8 +457,8 @@ class AnimationView @JvmOverloads constructor(
       path!!.reset()
       path!!.moveTo(leftX.toFloat(), pullHeight.toFloat())
       path!!.quadTo(
-        (localWidth / 2).toFloat(), pullHeight - radius * (1 - fraction),
-        (localWidth - leftX).toFloat(), pullHeight.toFloat()
+          (localWidth / 2).toFloat(), pullHeight - radius * (1 - fraction),
+          (localWidth - leftX).toFloat(), pullHeight.toFloat()
       )
       canvas.drawPath(path!!, ballPaint!!)
     }

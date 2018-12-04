@@ -13,7 +13,8 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 
 class LiquidRefreshLayout @JvmOverloads constructor(
-  context: Context, attrs: AttributeSet? = null,
+  context: Context,
+  attrs: AttributeSet? = null,
   defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
@@ -43,19 +44,22 @@ class LiquidRefreshLayout @JvmOverloads constructor(
     init(context, attrs)
   }
 
-  private fun init(context: Context, attrs: AttributeSet?) {
+  private fun init(
+    context: Context,
+    attrs: AttributeSet?
+  ) {
 
     if (childCount > 1) {
       throw RuntimeException("you can only attach one child")
     }
     setAttrs(attrs)
     pullHeight = TypedValue.applyDimension(
-      TypedValue.COMPLEX_UNIT_DIP, 150f,
-      context.resources.displayMetrics
+        TypedValue.COMPLEX_UNIT_DIP, 150f,
+        context.resources.displayMetrics
     )
     headerHeight = TypedValue.applyDimension(
-      TypedValue.COMPLEX_UNIT_DIP, 100f,
-      context.resources.displayMetrics
+        TypedValue.COMPLEX_UNIT_DIP, 100f,
+        context.resources.displayMetrics
     )
 
     this.post {
@@ -70,8 +74,8 @@ class LiquidRefreshLayout @JvmOverloads constructor(
     headerBackColor = a.getColor(R.styleable.LiquidRefreshLayout_AniBackColor, headerBackColor)
     headerForeColor = a.getColor(R.styleable.LiquidRefreshLayout_AniForeColor, headerForeColor)
     headerCircleSmaller = a.getInt(
-      R.styleable.LiquidRefreshLayout_CircleSmaller,
-      headerCircleSmaller
+        R.styleable.LiquidRefreshLayout_CircleSmaller,
+        headerCircleSmaller
     )
 
     a.recycle()
