@@ -3,7 +3,7 @@
   <a class="badge-align" href="https://www.codacy.com/app/mukeshsolanki/liquidrefreshlayout?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mukeshsolanki/liquidrefreshlayout&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/8507823b5c2e4890b47c7cec49d23f4e"/></a>
   <a href="https://jitpack.io/#mukeshsolanki/liquidrefreshlayout"><img src="https://jitpack.io/v/mukeshsolanki/liquidrefreshlayout/month.svg"/></a>
   <a href="https://jitpack.io/#mukeshsolanki/liquidrefreshlayout"> <img src="https://jitpack.io/v/mukeshsolanki/liquidrefreshlayout.svg" /></a>
-  <a href="https://circleci.com/gh/mukeshsolanki/liquidrefreshlayout/tree/master"> <img src="https://circleci.com/gh/mukeshsolanki/liquidrefreshlayout/tree/master.svg?style=shield" /></a>
+  <a href="https://github.com/mukeshsolanki/liquidrefreshlayout/actions"> <img src="https://github.com/mukeshsolanki/liquidrefreshlayout/workflows/Build/badge.svg" /></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg"/></a>
   <br /><br />
   Liquid Refresh Layout is a simple SwipeToRefresh library that helps you easily integrate SwipeToRefresh and performs simple clean liquid animation.
